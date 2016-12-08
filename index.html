@@ -31,7 +31,9 @@
       .attr("class","time-series")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
-      .append("g") .attr("transform","translate(" + margin.left + "," + margin.top + ")");
+      .attr("data-legend",function() { return "Count of " + className})
+      .append("g") .attr("transform","translate(" + margin.left + "," + margin.top + ")")
+      ;
 
       if (display !="") {
         svgElement.style("display",display)
@@ -78,7 +80,21 @@
     .style("text-anchor", "start");
 
          svgElement.append("g")
-         .call(d3.axisLeft(y).ticks(7));
+         .call(d3.axisLeft(y).ticks(7))
+         .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+         .text("Count");
+
+         svgElement.append("text")
+        .attr("x", (width / 2))             
+        .attr("y", 0 - (margin.top / 2))
+        .attr("text-anchor", "middle")  
+        .style("font-size", "16px") 
+        .style("text-decoration", "underline")  
+        .text(className + " time series");
    }
 
     function draw(data)
